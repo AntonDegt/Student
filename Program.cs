@@ -1,4 +1,4 @@
-﻿using ConsoleСSApp;
+using ConsoleСSApp;
 using System;
 
 namespace ConsoleApplication1
@@ -7,8 +7,14 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Student student = new Student("Aaa", "Bbb", new DateTime(2004, 09, 11), "Uk");
-            student.Print();
+            Group group = new Group(10);
+
+            group.RandomExamMarks();
+            group.Print(true);
+            group.ExpulsionLast();
+            group.Print(true);
+            group.ExpulsionFailedSession();
+            group.Print(true);
 
             Console.ReadKey();
         }
