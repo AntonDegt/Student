@@ -20,11 +20,8 @@ namespace ConsoleСSApp
             Students = new List<Student>();
         }
         public Group(int Count)
+            : this("Group", "Spez.", 1)
         {
-            Name = "GroupName";
-            Specialization = "Spez.";
-            CourseNumber = 1;
-
             Students = new List<Student>();
             for (int i = 0; i < Count; i++)
                 Students.Add(new Student("Name" + (i + 1), "Surname" + (i + 1), new DateTime(2000, 01, 01)));
@@ -32,12 +29,14 @@ namespace ConsoleСSApp
         public Group()
             : this(8) { }
         public Group(Student[] students)
+            : this("Group", "Spez.", 1)
         {
             this.Students = new List<Student>();
             foreach (Student student in students)
                 this.Students.Add(student);
         }
         public Group(Group group)
+            : this("Group", "Spez.", 1)
         {
             this.Students = new List<Student>(group.Students);
         }

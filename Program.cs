@@ -9,12 +9,12 @@ namespace ConsoleApplication1
         {
             Group group = new Group(10);
 
-            group.RandomExamMarks();
-            group.Print(true);
-            group.ExpulsionLast();
-            group.Print(true);
-            group.ExpulsionFailedSession();
-            group.Print(true);
+            Student s = group.GetByNumber(1);
+            s.SetExamMark(new int[] { 4, 3, 4, 5, 5 });
+            s.Print(true);
+
+            s.SetExamMark(new int[] { -1, 3, 4, 5, 5 });
+            s.Print(true);
 
             Console.ReadKey();
         }
