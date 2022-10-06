@@ -77,8 +77,8 @@ namespace ConsoleСSApp
         }
         public void SetOffsetMark(int mark, int subjectNumber)
         {
-            if (0 < mark || mark > 5) throw new MarkOutOfRange(mark, "offset");
-            Offsets[subjectCount] = mark;
+            if (mark < 0 || mark > 5) throw new MarkOutOfRange(mark, "offset");
+            Offsets[subjectNumber] = mark;
         }
         public void SetOffsetMark(int[] marks)
         {
@@ -87,8 +87,8 @@ namespace ConsoleСSApp
         }
         public void SetTermPaperMark(int mark, int subjectNumber)
         {
-            if (0 < mark || mark > 5) throw new MarkOutOfRange(mark, "term paper");
-            TermPapers[subjectCount] = mark;
+            if (mark < 0 || mark > 5) throw new MarkOutOfRange(mark, "term paper");
+            TermPapers[subjectNumber] = mark;
         }
         public void SetTermPaperMark(int[] marks)
         {
@@ -97,8 +97,8 @@ namespace ConsoleСSApp
         }
         public void SetExamMark(int mark, int subjectNumber)
         {
-            if (0 < mark || mark > 5) throw new MarkOutOfRange(mark, "exam");
-            Exams[subjectCount] = mark;
+            if (mark < 0 || mark > 5) throw new MarkOutOfRange(mark, "exam");
+            Exams[subjectNumber] = mark;
         }
         public void SetExamMark(int[] marks)
         {
