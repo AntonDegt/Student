@@ -7,11 +7,16 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Group group = new Group(10);
-            Group gr2 = new Group(7);
+            Group g = new Group(0);
+            Group g2 = new Group(7);
 
-            Console.WriteLine(group == gr2);
-            Console.WriteLine(group.Count);
+            Console.WriteLine(g == g2);
+            Console.WriteLine(g.Count);
+
+            g.Add(new Student("Ivan", "Ivanov", new DateTime(1999, 1, 1)));
+            g.Add(new Student("Vasya", "Vasyilev", new DateTime(2000, 1, 1)));
+
+            Console.WriteLine(g[0]);
 
             Console.ReadKey();
         }

@@ -80,17 +80,18 @@ namespace ConsoleСSApp
             this.Students = new List<Student>(group.Students);
         }
 
-        public void Print(bool exams = false)
+        public override string ToString()
         {
-            Console.WriteLine(Name + " " + Specialization + " " + CourseNumber);
+            string st = Name + " " + Specialization + " " + CourseNumber;
+
             int i = 1;
             foreach (Student student in Students)
             {
-                Console.Write(i + ") ");
-                student.Print(exams);
+                st += i + ") " + student + '\n';
                 i++;
             }
-            Console.WriteLine();
+            st += '\n';
+            return st;
         }
         public void RandomExamMarks()
         {
@@ -171,8 +172,8 @@ namespace ConsoleСSApp
         }
         private bool IndexInRange(int index)
         {
-            if (index < 0 || index > Count) return true;
-            return false;
+            if (index < 0 || index > Count) return false;
+            return true;
         }
         public Student this[int index]
         {

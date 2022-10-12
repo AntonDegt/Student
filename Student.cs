@@ -113,9 +113,9 @@ namespace ConsoleСSApp
         public Student(string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber)
             : this(Name, Surname, DateOfBirth, Address, PhoneNumber, 5) { }
         public Student(string Name, string Surname, DateTime DateOfBirth, string Address)
-            : this(Name, Surname, DateOfBirth, Address, "", 5) { }
+            : this(Name, Surname, DateOfBirth, Address, "+380998877666") { }
         public Student(string Name, string Surname, DateTime DateOfBirth)
-            : this(Name, Surname, DateOfBirth, "", "", 5) { }
+            : this(Name, Surname, DateOfBirth, "Ukraine") { }
         public Student(Student st)
         {
             Name = st.Name;
@@ -137,13 +137,9 @@ namespace ConsoleСSApp
             sum /= SubjectCount;
             return sum;
         }
-        public void Print(bool exams = false)
+        public override string ToString()
         {
-            Console.Write(Name + " " + Surname + " " + DateOfBirth.ToShortDateString() + " " + Address + " " + PhoneNumber);
-            if (exams)
-                for (int i = 0; i < Exams.Length; i++)
-                    Console.Write(Exams[i] + " ");
-            Console.WriteLine();
+            return (string)(Name + " " + Surname + " " + DateOfBirth.ToShortDateString() + " " + Address + " " + PhoneNumber);
         }
         public void PrintEx()
         {
