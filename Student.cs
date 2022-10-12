@@ -10,75 +10,8 @@ namespace ConsoleСSApp
         { }
     }
 
-    class Student
+    class Student : Person
     {
-        private string name; 
-        public string Name
-        {
-            set
-            {
-                if (value.Length > 1) name = value;
-                else throw new Exception("Name is short.");
-            }
-            get
-            {
-                return name;
-            }
-        }
-
-        private string surname;
-        public string Surname 
-        { 
-            set
-            {
-                if (value.Length > 1) surname = value;
-            }
-            get
-            {
-                return surname;
-            }
-        }
-
-        private DateTime dateOfBirth;
-        public DateTime DateOfBirth
-        {
-            set
-            {
-                if (value > new DateTime(1900, 1, 1) && value < (DateTime.Now.AddYears(-16))) dateOfBirth = value;
-                else throw new Exception("Date of birth not correct.");
-            }
-            get
-            {
-                return dateOfBirth;
-            }
-        }
-
-        private string address;
-        public string Address
-        {
-            set
-            {
-                if (value.Length > 5) address = value;
-                else throw new Exception("Address isn`t correct.");
-            }
-            get
-            {
-                return address;
-            }
-        }
-
-        private string phoneNumber;
-        public string PhoneNumber
-        {
-            set
-            {
-                if (value.Length >= 8) phoneNumber = value;
-            }
-            get
-            {
-                return phoneNumber;
-            }
-        }
 
         private int subjectCount;
         public int SubjectCount
@@ -99,13 +32,8 @@ namespace ConsoleСSApp
         private int[] Exams;
 
         public Student(string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber, int SubjectCount)
+            : base(Name, Surname, DateOfBirth, Address, PhoneNumber)
         {
-            this.Name = Name;
-            this.Surname = Surname;
-            this.DateOfBirth = DateOfBirth;
-            this.Address = Address;
-            this.PhoneNumber = PhoneNumber;
-
             Homeworks = new int[SubjectCount];
             TermPapers = new int[SubjectCount];
             Exams = new int[SubjectCount];
@@ -117,12 +45,8 @@ namespace ConsoleСSApp
         public Student(string Name, string Surname, DateTime DateOfBirth)
             : this(Name, Surname, DateOfBirth, "Ukraine") { }
         public Student(Student st)
+            : base(st.Name, st.Surname, st.DateOfBirth, st.Address, st.PhoneNumber)
         {
-            Name = st.Name;
-            Surname = st.Surname;
-            DateOfBirth = st.DateOfBirth;
-            Address = st.Address;
-            PhoneNumber = st.PhoneNumber;
             SubjectCount = st.SubjectCount;
             Homeworks = new int[st.Homeworks.Length]; for (int i = 0; i < st.Homeworks.Length; i++) Homeworks[i] = st.Homeworks[i];
             TermPapers = new int[st.TermPapers.Length]; for (int i = 0; i < st.TermPapers.Length; i++) TermPapers[i] = st.TermPapers[i];
@@ -136,10 +60,6 @@ namespace ConsoleСSApp
                 sum += (float)item;
             sum /= SubjectCount;
             return sum;
-        }
-        public override string ToString()
-        {
-            return (string)(Name + " " + Surname + " " + DateOfBirth.ToShortDateString() + " " + Address + " " + PhoneNumber);
         }
         public void PrintEx()
         {
@@ -195,6 +115,10 @@ namespace ConsoleСSApp
             return Exams;
         }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
         public override bool Equals(object obj)
         {
             Student s = obj as Student;
