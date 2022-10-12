@@ -16,7 +16,7 @@ namespace ConsoleApplication1
             g.Add(new Student("Ivan", "Ivanov", new DateTime(1999, 1, 1)));
             g.Add(new Student("Vasya", "Vasyilev", new DateTime(2000, 1, 1)));
 
-            Console.WriteLine(g[0]);
+            Console.WriteLine(g[1]);
 
             Console.ReadKey();
         }
