@@ -18,6 +18,11 @@ namespace ConsoleApplication1
 
             Console.WriteLine(g[1]);
 
+            Person p = new Person("Anton", "Antonov", new DateTime(2004, 9, 11));
+            Console.WriteLine(p);
+            Aspirant a = new Aspirant("Anton", "Antonov", new DateTime(2004, 9, 11), "Ukrain", "+380667788999", "SoftWare Development");
+            Console.WriteLine(a);
+
             Console.ReadKey();
         }
     }

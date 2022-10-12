@@ -85,7 +85,7 @@ namespace ConsoleСSApp
         public Person(string Name, string Surname, DateTime DateOfBirth)
             : this(Name, Surname, DateOfBirth, "Ukraine") { }
         public Person()
-            : this("PersonName", "PersonSurname", new DateTime(2000, 1, )) { }
+            : this("PersonName", "PersonSurname", new DateTime(2000, 1, 1)) { }
 
         public override string ToString()
         {
