@@ -8,20 +8,10 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             Group group = new Group(10);
+            Group gr2 = new Group(7);
 
-            Student s = group.GetByNumber(1);
-            s.SetExamMark(new int[] { 4, 3, 4, 5, 5 });
-            s.Print(true);
-
-            try
-            {
-                s.SetExamMark(new int[] { -1, 3, 4, 5, 5 });
-                s.Print(true);
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine($"Error: {e.Message}");
-            }
+            Console.WriteLine(group == gr2);
+            Console.WriteLine(group.Count);
 
             Console.ReadKey();
         }

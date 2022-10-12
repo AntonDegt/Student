@@ -7,9 +7,48 @@ namespace ConsoleСSApp
     {
         private List<Student> Students;
         public int Count { get { return Students.Count; } }
-        public string Name { set; get; }
-        public string Specialization { set; get; }
-        public int CourseNumber { set; get; }
+
+        private string name;
+        public string Name 
+        { 
+            set
+            {
+                if (value.Length > 2) name = value;
+                else throw new Exception("Name isn't correct.");
+            }
+            get
+            {
+                return name;
+            }
+        }
+
+        private string specialization;
+        public string Specialization 
+        { 
+            set
+            {
+                if (value.Length > 2) specialization = value;
+                else throw new Exception("Specialization isn't correct");
+            }
+            get
+            {
+                return specialization;
+            }
+        }
+
+        private int courseNumber;
+        public int CourseNumber 
+        { 
+            set
+            {
+                if (value > 0 && value <= 4) courseNumber = value;
+                else throw new Exception("Course number out of range.");
+            }
+            get
+            {
+                return courseNumber;
+            }
+        }
 
         public Group(string Name, string Specialization, int CourseNumber)
         {
@@ -105,6 +144,48 @@ namespace ConsoleСSApp
             }
 
             Students.Remove(lastStudent);
+        }
+        public override bool Equals(object obj)
+        {
+            Group g = obj as Group;
+            if (g == null)
+                return false;
+            return g.Count == this.Count;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public static bool operator== (Group g1, Group g2)
+        {
+            if (ReferenceEquals(g1, g2)) return true;
+
+            if ((object)g1 == null && (object)g2 != null) return false;
+            if ((object)g2 == null && (object)g1 != null) return false;
+
+            return g1.Count == g2.Count;
+        }
+        public static bool operator!= (Group g1, Group g2)
+        {
+            return !(g1 == g2);
+        }
+        private bool IndexInRange(int index)
+        {
+            if (index < 0 || index > Count) return true;
+            return false;
+        }
+        public Student this[int index]
+        {
+            set
+            {
+                if (IndexInRange(index)) Students[index] = value;
+                else throw new IndexOutOfRangeException();
+            }
+            get
+            {
+                if (IndexInRange(index)) return Students[index];
+                else throw new IndexOutOfRangeException();
+            }
         }
     }
 }
