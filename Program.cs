@@ -50,6 +50,10 @@ namespace ConsoleApplication1
             foreach (var item in gr)
                 Console.WriteLine(item);
 
+            // Cccc Hhhh 03.02.2000 Ukraine + 380998877666
+            // Bbbb Xxxx 15.02.2000 Ukraine + 380998877666
+            // Aaa Gggg 19.01.2001 Ukraine + 380998877666
+
 
             Console.ReadKey();
         }
