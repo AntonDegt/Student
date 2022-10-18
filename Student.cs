@@ -10,7 +10,7 @@ namespace ConsoleСSApp
         { }
     }
 
-    class Student : Person
+    class Student : Person, IComparable
     {
 
         private int subjectCount;
@@ -26,17 +26,37 @@ namespace ConsoleСSApp
             }
         }
 
-
-        private int[] Homeworks;
-        private int[] TermPapers;
-        private int[] Exams;
+        private int[] homeworks;
+        public int[] Homeworks
+        {
+            get
+            {
+                return homeworks;
+            }
+        }
+        private int[] termPapers;
+        public int[] TermPapers
+        {
+            get
+            {
+                return termPapers;
+            }
+        }
+        private int[] exams;
+        public int[] Exams
+        {
+            get
+            {
+                return exams;
+            }
+        }
 
         public Student(string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber, int SubjectCount)
             : base(Name, Surname, DateOfBirth, Address, PhoneNumber)
         {
-            Homeworks = new int[SubjectCount];
-            TermPapers = new int[SubjectCount];
-            Exams = new int[SubjectCount];
+            homeworks = new int[SubjectCount];
+            termPapers = new int[SubjectCount];
+            exams = new int[SubjectCount];
         }
         public Student(string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber)
             : this(Name, Surname, DateOfBirth, Address, PhoneNumber, 5) { }
@@ -48,15 +68,15 @@ namespace ConsoleСSApp
             : base(st.Name, st.Surname, st.DateOfBirth, st.Address, st.PhoneNumber)
         {
             SubjectCount = st.SubjectCount;
-            Homeworks = new int[st.Homeworks.Length]; for (int i = 0; i < st.Homeworks.Length; i++) Homeworks[i] = st.Homeworks[i];
-            TermPapers = new int[st.TermPapers.Length]; for (int i = 0; i < st.TermPapers.Length; i++) TermPapers[i] = st.TermPapers[i];
-            Exams = new int[st.Exams.Length]; for (int i = 0; i < st.Exams.Length; i++) Exams[i] = st.Exams[i];
+            homeworks = new int[st.homeworks.Length]; for (int i = 0; i < st.homeworks.Length; i++) homeworks[i] = st.homeworks[i];
+            termPapers = new int[st.termPapers.Length]; for (int i = 0; i < st.termPapers.Length; i++) termPapers[i] = st.termPapers[i];
+            exams = new int[st.exams.Length]; for (int i = 0; i < st.exams.Length; i++) exams[i] = st.exams[i];
         }
 
         public float AverageHomework ()
         {
             float sum = 0;
-            foreach (int item in Homeworks)
+            foreach (int item in homeworks)
                 sum += (float)item;
             sum /= SubjectCount;
             return sum;
@@ -64,31 +84,31 @@ namespace ConsoleСSApp
         public void PrintEx()
         {
             Console.Write("Offset: ");
-            for(int i = 0; i < Homeworks.Length; i++)
-                Console.Write(Homeworks[i]);
+            for(int i = 0; i < homeworks.Length; i++)
+                Console.Write(homeworks[i]);
 
             Console.Write("TermPapers: ");
-            for (int i = 0; i < TermPapers.Length; i++)
-                Console.Write(TermPapers[i]);
+            for (int i = 0; i < termPapers.Length; i++)
+                Console.Write(termPapers[i]);
 
             Console.Write("Exams: ");
-            for (int i = 0; i < Exams.Length; i++)
-                Console.Write(Exams[i]);
+            for (int i = 0; i < exams.Length; i++)
+                Console.Write(exams[i]);
         }
-        public void SetOffsetMark(int mark, int subjectNumber)
+        public void SetHomeworksMark(int mark, int subjectNumber)
         {
             if (mark < 0 || mark > 5) throw new MarkOutOfRange(mark, "offset");
-            Homeworks[subjectNumber] = mark;
+            homeworks[subjectNumber] = mark;
         }
-        public void SetOffsetMark(int[] marks)
+        public void SetHomeworksMark(int[] marks)
         {
             for (int i = 0; i < marks.Length; i++)
-                SetOffsetMark(marks[i], i);
+                SetHomeworksMark(marks[i], i);
         }
         public void SetTermPaperMark(int mark, int subjectNumber)
         {
             if (mark < 0 || mark > 5) throw new MarkOutOfRange(mark, "term paper");
-            TermPapers[subjectNumber] = mark;
+            termPapers[subjectNumber] = mark;
         }
         public void SetTermPaperMark(int[] marks)
         {
@@ -98,7 +118,7 @@ namespace ConsoleСSApp
         public void SetExamMark(int mark, int subjectNumber)
         {
             if (mark < 0 || mark > 5) throw new MarkOutOfRange(mark, "exam");
-            Exams[subjectNumber] = mark;
+            exams[subjectNumber] = mark;
         }
         public void SetExamMark(int[] marks)
         {
@@ -107,12 +127,12 @@ namespace ConsoleСSApp
         }
         public void RandomExamMarks(Random random)
         {
-            for(int i = 0; i < Exams.Length; i++)
-                Exams[i] = random.Next(2, 6);
+            for(int i = 0; i < exams.Length; i++)
+                exams[i] = random.Next(2, 6);
         }
         public int[] GetExams()
         {
-            return Exams;
+            return exams;
         }
 
         public override string ToString()
@@ -130,6 +150,27 @@ namespace ConsoleСSApp
         {
             return base.GetHashCode();
         }
+        public new object Clone()
+        {
+            Student clone = new Student(Name, Surname, DateOfBirth, Address, PhoneNumber, SubjectCount);
+
+            SetExamMark(exams);
+            SetHomeworksMark(homeworks);
+            SetTermPaperMark(termPapers);
+
+            return clone;
+        }
+        public int CompareTo(object obj)
+        {
+            Student st = (Student)obj;
+            float av = this.AverageHomework();
+            float av2 = st.AverageHomework();
+
+            if (av > av2) return 1;
+            else if (av < av2) return -1;
+            else return 0;
+        }
+
         public static bool operator> (Student s1, Student s2)
         {
             if (s1 != null && s2 != null) return s1.AverageHomework() > s2.AverageHomework();

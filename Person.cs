@@ -2,7 +2,7 @@
 
 namespace ConsoleСSApp
 {
-    class Person
+    class Person : ICloneable
     {
         private string name;
         public string Name
@@ -90,6 +90,11 @@ namespace ConsoleСSApp
         public override string ToString()
         {
             return (string)(Name + " " + Surname + " " + DateOfBirth.ToShortDateString() + " " + Address + " " + PhoneNumber);
+        }
+
+        public object Clone()
+        {
+            return new Person(Name, Surname, DateOfBirth, Address, PhoneNumber);
         }
     }
 }

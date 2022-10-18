@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ConsoleСSApp
 {
-    class Group
+    class Group : ICloneable, IComparable
     {
         private List<Student> Students;
         public int Count { get { return Students.Count; } }
@@ -156,6 +156,18 @@ namespace ConsoleСSApp
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+        public object Clone()
+        {
+            return new Group(this);
+        }
+        public int CompareTo(object obj)
+        {
+            Group gr = (Group)obj;
+
+            if (this.Count > gr.Count) return 1;
+            else if (this.Count < gr.Count) return -1;
+            else return 0;
         }
         public static bool operator== (Group g1, Group g2)
         {

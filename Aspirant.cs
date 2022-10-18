@@ -21,5 +21,13 @@ namespace ConsoleСSApp
         {
             return base.ToString() + " " + Topic;
         }
+        public object Clone()
+        {
+            Aspirant clone = new Aspirant(Name, Surname, DateOfBirth, Address, PhoneNumber, Topic);
+
+
+
+            return clone;
+        }
     }
 }
