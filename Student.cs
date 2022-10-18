@@ -130,6 +130,11 @@ namespace ConsoleСSApp
             for(int i = 0; i < exams.Length; i++)
                 exams[i] = random.Next(2, 6);
         }
+        public void RandomHomeworkMarks(Random random)
+        {
+            for (int i = 0; i < homeworks.Length; i++)
+                homeworks[i] = random.Next(2, 6);
+        }
         public int[] GetExams()
         {
             return exams;
@@ -195,6 +200,14 @@ namespace ConsoleСSApp
         public static bool operator !=(Student s1, Student s2)
         {
             return !(s1 == s2);
+        }
+
+        public class AverageHomeworkComparer : IComparer<Student>
+        {
+            public int Compare(Student x, Student y)
+            {
+                return x.CompareTo(y);
+            }
         }
     }
 }

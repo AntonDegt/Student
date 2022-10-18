@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleСSApp
 {
@@ -95,6 +96,30 @@ namespace ConsoleСSApp
         public object Clone()
         {
             return new Person(Name, Surname, DateOfBirth, Address, PhoneNumber);
+        }
+
+
+        public class NameComparer : IComparer<Person>
+        {
+            public int Compare(Person x, Person y)
+            {
+                return x.Name.CompareTo(y.Name);
+            }
+        }
+        public class SurnameComparer : IComparer<Person>
+        {
+            public int Compare(Person x, Person y)
+            {
+                return x.Surname.CompareTo(y.Surname);
+            }
+        }
+
+        public class DateOfBirthCompare : IComparer<Person>
+        {
+            public int Compare(Person x, Person y)
+            {
+                return x.DateOfBirth.CompareTo(y.DateOfBirth);
+            }
         }
     }
 }

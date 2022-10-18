@@ -1,12 +1,14 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace ConsoleСSApp
 {
-    class Group : ICloneable, IComparable
+    
+    class Group : ICloneable, IComparable, IEnumerable
     {
-        private List<Student> Students;
-        public int Count { get { return Students.Count; } }
+        private Student[] Students;
+        public int Count { get { return Students.Length; } }
 
         private string name;
         public string Name 
@@ -56,28 +58,30 @@ namespace ConsoleСSApp
             this.Specialization = Specialization;
             this.CourseNumber = CourseNumber;
 
-            Students = new List<Student>();
+            Students = null;
         }
         public Group(int Count)
             : this("Group", "Spez.", 1)
         {
-            Students = new List<Student>();
+            Students = new Student[Count];
             for (int i = 0; i < Count; i++)
-                Students.Add(new Student("Name" + (i + 1), "Surname" + (i + 1), new DateTime(2000, 01, 01)));
+                Students[i] = new Student("Name" + (i + 1), "Surname" + (i + 1), new DateTime(2000, 01, 01));
         }
         public Group()
             : this(8) { }
         public Group(Student[] students)
             : this("Group", "Spez.", 1)
         {
-            this.Students = new List<Student>();
-            foreach (Student student in students)
-                this.Students.Add(student);
+            this.Students = new Student[students.Length];
+            for (int i = 0; i < students.Length; i++)
+                this.Students[i] = students[i];
         }
         public Group(Group group)
             : this("Group", "Spez.", 1)
         {
-            this.Students = new List<Student>(group.Students);
+            this.Students = new Student[group.Count];
+            for (int i = 0; i < group.Count; i++)
+                this.Students[i] = group.Students[i];
         }
 
         public override string ToString()
@@ -99,9 +103,19 @@ namespace ConsoleСSApp
             foreach (Student student in Students)
                 student.RandomExamMarks(random);
         }
+        public void RandomHomeworkMarks()
+        {
+            Random random = new Random();
+            foreach (Student student in Students)
+                student.RandomHomeworkMarks(random);
+        }
         public void Add(Student student)
         {
-            Students.Add(student);
+            Student[] t = Students;
+            Students = new Student[t.Length + 1];
+            for (int i = 0; i < t.Length; i++)
+                Students[i] = t[i];
+            Students[t.Length] = student;
         }
         public Student GetByNumber(int number)
         {
@@ -114,15 +128,24 @@ namespace ConsoleСSApp
         }
         public void ExpulsionFailedSession()
         {
-            Student[] st = new Student[Students.Count];
+            Student[] st = new Student[Count];
+            int count = 0;
 
-            for (int i = 0; i < Students.Count; i++)
+            for (int i = 0; i < Count; i++)
                 foreach (int mark in Students[i].GetExams())
-                    if (mark < 3)
-                        st[i] = (Students[i]);
-            foreach (Student student in st)
-                if (student != null)
-                    Students.Remove(student);
+                    if (mark > 3)
+                    {
+                        st[i] = Students[i];
+                        count++;
+                    }
+            Students = new Student[count];
+            int j = 0;
+            for (int i = 0; i < st.Length; i++)
+                if (st[i] != null)
+                {
+                    Students[j] = st[i];
+                    j++;
+                }
         }
         public void ExpulsionLast()
         {
@@ -144,7 +167,16 @@ namespace ConsoleСSApp
                 }
             }
 
-            Students.Remove(lastStudent);
+            Student[] t = Students;
+            Students = new Student[t.Length - 2];
+
+            int j = 0;
+            for (int i = 0; i < t.Length; i++)
+                if (t[i] != lastStudent)
+                {
+                    Students[j] = t[i];
+                    j++;
+                }
         }
         public override bool Equals(object obj)
         {
@@ -199,6 +231,18 @@ namespace ConsoleСSApp
                 if (IndexInRange(index)) return Students[index];
                 else throw new IndexOutOfRangeException();
             }
+        }
+        public class CountCompare : IComparer<Group>
+        {
+            public int Compare(Group x, Group y)
+            {
+                return x.CompareTo(y);
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new GroupEnumerator(Students);
         }
     }
 }
