@@ -8,9 +8,9 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             Student[] st = new Student[] {
-                new Student("Aaa", "Gggg", new DateTime(2001, 1, 19)),
-                new Student("Bbbb", "Xxxx", new DateTime(2000, 2, 15)),
-                new Student("Cccc", "Hhhh", new DateTime(2000, 2, 3))};
+                new Student("Aaa", "Gggg", new Date(19, 1, 2001)),
+                new Student("Bbbb", "Xxxx", new Date(15, 2, 2000)),
+                new Student("Cccc", "Hhhh", new Date(3, 2, 2000))};
 
             Random r = new Random();
             for (int i = 0; i < 3; i++)

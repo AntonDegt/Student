@@ -11,7 +11,7 @@ namespace ConsoleСSApp
             get { return topic; }
             set { topic = value; }
         }
-        public Aspirant (string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber, string Topic)
+        public Aspirant (string Name, string Surname, Date DateOfBirth, string Address, string PhoneNumber, string Topic)
             : base(Name, Surname, DateOfBirth, Address, PhoneNumber)
         {
             this.Topic = Topic;

@@ -51,18 +51,18 @@ namespace ConsoleСSApp
             }
         }
 
-        public Student(string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber, int SubjectCount)
+        public Student(string Name, string Surname, Date DateOfBirth, string Address, string PhoneNumber, int SubjectCount)
             : base(Name, Surname, DateOfBirth, Address, PhoneNumber)
         {
             homeworks = new int[SubjectCount];
             termPapers = new int[SubjectCount];
             exams = new int[SubjectCount];
         }
-        public Student(string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber)
+        public Student(string Name, string Surname, Date DateOfBirth, string Address, string PhoneNumber)
             : this(Name, Surname, DateOfBirth, Address, PhoneNumber, 5) { }
-        public Student(string Name, string Surname, DateTime DateOfBirth, string Address)
+        public Student(string Name, string Surname, Date DateOfBirth, string Address)
             : this(Name, Surname, DateOfBirth, Address, "+380998877666") { }
-        public Student(string Name, string Surname, DateTime DateOfBirth)
+        public Student(string Name, string Surname, Date DateOfBirth)
             : this(Name, Surname, DateOfBirth, "Ukraine") { }
         public Student(Student st)
             : base(st.Name, st.Surname, st.DateOfBirth, st.Address, st.PhoneNumber)
@@ -124,20 +124,6 @@ namespace ConsoleСSApp
         {
             for (int i = 0; i < marks.Length; i++)
                 SetExamMark(marks[i], i);
-        }
-        public void RandomExamMarks(Random random)
-        {
-            for(int i = 0; i < exams.Length; i++)
-                exams[i] = random.Next(2, 6);
-        }
-        public void RandomHomeworkMarks(Random random)
-        {
-            for (int i = 0; i < homeworks.Length; i++)
-                homeworks[i] = random.Next(2, 6);
-        }
-        public int[] GetExams()
-        {
-            return exams;
         }
 
         public override string ToString()

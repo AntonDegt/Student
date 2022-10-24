@@ -32,19 +32,8 @@ namespace ConsoleСSApp
             }
         }
 
-        private DateTime dateOfBirth;
-        public DateTime DateOfBirth
-        {
-            set
-            {
-                if (value > new DateTime(1900, 1, 1) && value < (DateTime.Now.AddYears(-16))) dateOfBirth = value;
-                else throw new Exception("Date of birth not correct.");
-            }
-            get
-            {
-                return dateOfBirth;
-            }
-        }
+        private Date dateOfBirth;
+        public Date DateOfBirth { set; get; }
 
         private string address;
         public string Address
@@ -73,7 +62,7 @@ namespace ConsoleСSApp
             }
         }
 
-        public Person(string Name, string Surname, DateTime DateOfBirth, string Address, string PhoneNumber)
+        public Person(string Name, string Surname, Date DateOfBirth, string Address, string PhoneNumber)
         {
             this.Name = Name;
             this.Surname = Surname;
@@ -81,16 +70,16 @@ namespace ConsoleСSApp
             this.Address = Address;
             this.PhoneNumber = PhoneNumber;
         }
-        public Person(string Name, string Surname, DateTime DateOfBirth, string Address)
+        public Person(string Name, string Surname, Date DateOfBirth, string Address)
             : this(Name, Surname, DateOfBirth, Address, "+380998877666") { }
-        public Person(string Name, string Surname, DateTime DateOfBirth)
+        public Person(string Name, string Surname, Date DateOfBirth)
             : this(Name, Surname, DateOfBirth, "Ukraine") { }
         public Person()
-            : this("PersonName", "PersonSurname", new DateTime(2000, 1, 1)) { }
+            : this("PersonName", "PersonSurname", new Date(2000, 1, 1)) { }
 
         public override string ToString()
         {
-            return (string)(Name + " " + Surname + " " + DateOfBirth.ToShortDateString() + " " + Address + " " + PhoneNumber);
+            return (string)(Name + " " + Surname + " " + DateOfBirth + " " + Address + " " + PhoneNumber);
         }
 
         public object Clone()

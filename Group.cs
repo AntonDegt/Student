@@ -7,8 +7,12 @@ namespace ConsoleСSApp
     
     class Group : ICloneable, IComparable, IEnumerable
     {
-        private Student[] Students;
-        public int Count { get { return Students.Length; } }
+        private Student[] students;
+        public Student[] Students
+        {
+            get { return students; }
+        }
+        public int Count { get { return students.Length; } }
 
         private string name;
         public string Name 
@@ -58,30 +62,30 @@ namespace ConsoleСSApp
             this.Specialization = Specialization;
             this.CourseNumber = CourseNumber;
 
-            Students = null;
+            students = null;
         }
         public Group(int Count)
             : this("Group", "Spez.", 1)
         {
-            Students = new Student[Count];
+            students = new Student[Count];
             for (int i = 0; i < Count; i++)
-                Students[i] = new Student("Name" + (i + 1), "Surname" + (i + 1), new DateTime(2000, 01, 01));
+                students[i] = new Student("Name" + (i + 1), "Surname" + (i + 1), new DateTime(2000, 01, 01));
         }
         public Group()
             : this(8) { }
         public Group(Student[] students)
             : this("Group", "Spez.", 1)
         {
-            this.Students = new Student[students.Length];
+            this.students = new Student[students.Length];
             for (int i = 0; i < students.Length; i++)
-                this.Students[i] = students[i];
+                this.students[i] = students[i];
         }
         public Group(Group group)
             : this("Group", "Spez.", 1)
         {
-            this.Students = new Student[group.Count];
+            this.students = new Student[group.Count];
             for (int i = 0; i < group.Count; i++)
-                this.Students[i] = group.Students[i];
+                this.students[i] = group.students[i];
         }
 
         public override string ToString()
@@ -89,7 +93,7 @@ namespace ConsoleСSApp
             string st = Name + " " + Specialization + " " + CourseNumber;
 
             int i = 1;
-            foreach (Student student in Students)
+            foreach (Student student in students)
             {
                 st += i + ") " + student + '\n';
                 i++;
@@ -97,33 +101,21 @@ namespace ConsoleСSApp
             st += '\n';
             return st;
         }
-        public void RandomExamMarks()
-        {
-            Random random = new Random();
-            foreach (Student student in Students)
-                student.RandomExamMarks(random);
-        }
-        public void RandomHomeworkMarks()
-        {
-            Random random = new Random();
-            foreach (Student student in Students)
-                student.RandomHomeworkMarks(random);
-        }
         public void Add(Student student)
         {
-            Student[] t = Students;
-            Students = new Student[t.Length + 1];
+            Student[] t = students;
+            students = new Student[t.Length + 1];
             for (int i = 0; i < t.Length; i++)
-                Students[i] = t[i];
-            Students[t.Length] = student;
+                students[i] = t[i];
+            students[t.Length] = student;
         }
         public Student GetByNumber(int number)
         {
-            return Students[number-1];
+            return students[number-1];
         }
         public Student PopByNumber(int number)
         {
-            Student student = new Student(Students[number-1]);
+            Student student = new Student(students[number-1]);
             return student;
         }
         public void ExpulsionFailedSession()
@@ -132,32 +124,32 @@ namespace ConsoleСSApp
             int count = 0;
 
             for (int i = 0; i < Count; i++)
-                foreach (int mark in Students[i].GetExams())
+                foreach (int mark in students[i].Exams)
                     if (mark > 3)
                     {
-                        st[i] = Students[i];
+                        st[i] = students[i];
                         count++;
                     }
-            Students = new Student[count];
+            students = new Student[count];
             int j = 0;
             for (int i = 0; i < st.Length; i++)
                 if (st[i] != null)
                 {
-                    Students[j] = st[i];
+                    students[j] = st[i];
                     j++;
                 }
         }
         public void ExpulsionLast()
         {
-            Student lastStudent = Students[0];
+            Student lastStudent = students[0];
             int lastMarks = 0;
-            foreach (int mark in lastStudent.GetExams())
+            foreach (int mark in lastStudent.Exams)
                 lastMarks += mark;
 
-            foreach (Student student in Students)
+            foreach (Student student in students)
             {
                 int marks = 0;
-                foreach (int mark in student.GetExams())
+                foreach (int mark in student.Exams)
                     marks += mark;
 
                 if (marks <= lastMarks)
@@ -167,14 +159,14 @@ namespace ConsoleСSApp
                 }
             }
 
-            Student[] t = Students;
-            Students = new Student[t.Length - 2];
+            Student[] t = students;
+            students = new Student[t.Length - 2];
 
             int j = 0;
             for (int i = 0; i < t.Length; i++)
                 if (t[i] != lastStudent)
                 {
-                    Students[j] = t[i];
+                    students[j] = t[i];
                     j++;
                 }
         }
@@ -223,12 +215,12 @@ namespace ConsoleСSApp
         {
             set
             {
-                if (IndexInRange(index)) Students[index] = value;
+                if (IndexInRange(index)) students[index] = value;
                 else throw new IndexOutOfRangeException();
             }
             get
             {
-                if (IndexInRange(index)) return Students[index];
+                if (IndexInRange(index)) return students[index];
                 else throw new IndexOutOfRangeException();
             }
         }
@@ -242,7 +234,7 @@ namespace ConsoleСSApp
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new GroupEnumerator(Students);
+            return new GroupEnumerator(students);
         }
     }
 }
